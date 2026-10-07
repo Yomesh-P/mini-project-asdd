@@ -1,0 +1,223 @@
+{
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "uid": "cricket-telemetry-2026",
+  "title": "Smart Cricket Tracker - Observability & Telemetry",
+  "tags": ["cricket", "devops", "mlops", "2026"],
+  "timezone": "browser",
+  "schemaVersion": 38,
+  "version": 1,
+  "refresh": "5s",
+  "time": {
+    "from": "now-15m",
+    "to": "now"
+  },
+  "panels": [
+    {
+      "id": 1,
+      "title": "System Active Health & Services UP",
+      "type": "stat",
+      "gridPos": { "h": 4, "w": 6, "x": 0, "y": 0 },
+      "targets": [
+        {
+          "expr": "sum(up)",
+          "legendFormat": "Active Scrape Targets"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "values": false }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "red", "value": null },
+              { "color": "green", "value": 1 }
+            ]
+          },
+          "unit": "short"
+        }
+      }
+    },
+    {
+      "id": 2,
+      "title": "Total API Gateway Requests",
+      "type": "stat",
+      "gridPos": { "h": 4, "w": 6, "x": 6, "y": 0 },
+      "targets": [
+        {
+          "expr": "sum(cricket_http_requests_total) or vector(0)",
+          "legendFormat": "Total Requests"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "values": false }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "fixedColor": "blue", "mode": "fixed" },
+          "unit": "req"
+        }
+      }
+    },
+    {
+      "id": 3,
+      "title": "Match Live Scoring Operations",
+      "type": "stat",
+      "gridPos": { "h": 4, "w": 6, "x": 12, "y": 0 },
+      "targets": [
+        {
+          "expr": "sum(cricket_match_score_updates_total) or vector(0)",
+          "legendFormat": "Score Events"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "values": false }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "fixedColor": "green", "mode": "fixed" },
+          "unit": "short"
+        }
+      }
+    },
+    {
+      "id": 4,
+      "title": "FastAPI ML Inferences",
+      "type": "stat",
+      "gridPos": { "h": 4, "w": 6, "x": 18, "y": 0 },
+      "targets": [
+        {
+          "expr": "sum(http_requests_total) or vector(0)",
+          "legendFormat": "ML Inferences"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "reduceOptions": { "calcs": ["lastNotNull"], "values": false }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "fixedColor": "purple", "mode": "fixed" },
+          "unit": "short"
+        }
+      }
+    },
+    {
+      "id": 5,
+      "title": "HTTP Request Throughput (Req / min)",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 4 },
+      "targets": [
+        {
+          "expr": "sum(rate(cricket_http_requests_total[1m])) * 60",
+          "legendFormat": "API Gateway (Req/min)"
+        },
+        {
+          "expr": "sum(rate(http_requests_total[1m])) * 60",
+          "legendFormat": "FastAPI ML (Req/min)"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "fillOpacity": 15
+          },
+          "unit": "reqpm"
+        }
+      }
+    },
+    {
+      "id": 6,
+      "title": "95th Percentile Latency (p95 API Duration)",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 4 },
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum(rate(cricket_http_request_duration_seconds_bucket[5m])) by (le))",
+          "legendFormat": "Express p95 Latency"
+        },
+        {
+          "expr": "histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket[5m])) by (le))",
+          "legendFormat": "FastAPI p95 Latency"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "fillOpacity": 10
+          },
+          "unit": "s"
+        }
+      }
+    },
+    {
+      "id": 7,
+      "title": "Live Ball-by-Ball Scoring Operations by Type",
+      "type": "timeseries",
+      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 12 },
+      "targets": [
+        {
+          "expr": "sum(rate(cricket_match_score_updates_total[1m])) by (update_type)",
+          "legendFormat": "{{update_type}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "bars",
+            "fillOpacity": 60
+          },
+          "unit": "ops"
+        }
+      }
+    },
+    {
+      "id": 8,
+      "title": "Service Process Resident Memory (RSS)",
+      "type": "timeseries",
+      "gridPos": { "h": 7, "w": 12, "x": 12, "y": 12 },
+      "targets": [
+        {
+          "expr": "cricket_backend_process_resident_memory_bytes",
+          "legendFormat": "Node Express RSS"
+        },
+        {
+          "expr": "process_resident_memory_bytes{job=\"cricket-ml-service\"}",
+          "legendFormat": "FastAPI ML RSS"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "fillOpacity": 12
+          },
+          "unit": "bytes"
+        }
+      }
+    }
+  ]
+}
