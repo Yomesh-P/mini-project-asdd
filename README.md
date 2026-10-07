@@ -166,3 +166,4 @@ The database schema connects real-time scoring to ML feature engineering:
 6. **Autoscaling & Monitoring:** Execute load test (`hey -n 10000 -c 50`), observe Grafana dashboard spikes in request rate, and watch Kubernetes HPA scale backend pods from 2 to 5.
 7. **MLOps Validation:** Open MLflow dashboard showing logged experiment metrics, and open Airflow UI showing successful scheduled retraining DAG run.
 8. **Jira:** Close `CRIC-99` moving it to *Done*.
+9. **Project Completed:** Present the final lab report confirming all 10 Agile and DevOps syllabus experiments have been successfully executed within a single, cohesive end-to-end pipeline.
