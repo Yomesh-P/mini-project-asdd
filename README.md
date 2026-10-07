@@ -16,7 +16,7 @@ A complete end-to-end MERN + FastAPI MLOps sports analytics platform designed to
 
 ---
 
-## 🏗️ 2. Architecture & Tech Stack
+## 2. Architecture & Tech Stack
 
 ```
 React (Recharts) SPA --> Node/Express REST API --> MongoDB
