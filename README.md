@@ -1,4 +1,4 @@
-# 🏏 Smart Cricket Tournament Tracker
+# Smart Cricket Tournament Tracker
 
 **Course:** Agile Software Development and DevOps Lab (TE AI & DS, Semester V)  
 **Institution:** Thadomal Shahani Engineering College  
@@ -6,7 +6,7 @@
 
 ---
 
-## 📌 1. Project Overview
+## 1. Project Overview
 
 A complete end-to-end MERN + FastAPI MLOps sports analytics platform designed to solve local and club-level cricket management chaos. Replaces ad-hoc WhatsApp groups and spreadsheets with:
 - **Real-Time Live Scoring Console:** Ball-by-ball updates, live runs, wickets, overs, current striker & bowler statistics.
